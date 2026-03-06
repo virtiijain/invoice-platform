@@ -93,40 +93,45 @@
 ## 📁 Project Structure
 
 ```
-invoice-tool/
-│
-├── 📂 app/                        # Next.js App Router
-│   ├── 📂 (auth)/
-│   │   ├── login/                 # Login page
-│   │   └── register/              # Register page
-│   ├── 📂 (dashboard)/
-│   │   ├── dashboard/             # Main dashboard
-│   │   ├── invoices/              # Invoice list & builder
-│   │   ├── clients/               # Client management
-│   │   └── settings/              # User & company settings
-│   └── 📂 api/
-│       ├── invoices/              # Invoice CRUD API routes
-│       └── clients/               # Client CRUD API routes
-│
-├── 📂 components/
-│   ├── 📂 ui/                     # shadcn/ui base components
-│   ├── 📂 invoice/                # Invoice-specific components
+src/
+├── app/
+│   ├── (auth)/
+│   │   ├── login/page.tsx
+│   │   └── signup/page.tsx
+│   ├── (dashboard)/
+│   │   ├── layout.tsx          ← Sidebar + Navbar
+│   │   ├── dashboard/page.tsx
+│   │   ├── invoices/
+│   │   │   ├── page.tsx        ← Invoice List
+│   │   │   └── new/page.tsx    ← Invoice Builder
+│   │   ├── clients/page.tsx
+│   │   └── settings/page.tsx
+│   ├── layout.tsx              ← Root layout
+│   └── page.tsx                ← Redirect to login/dashboard
+├── components/
+│   ├── ui/                     ← shadcn components
+│   ├── dashboard/
+│   │   ├── StatsCards.tsx
+│   │   └── RevenueChart.tsx
+│   ├── invoices/
+│   │   ├── InvoiceTable.tsx
 │   │   ├── InvoiceBuilder.tsx
-│   │   ├── InvoicePreview.tsx
-│   │   └── InvoiceTable.tsx
-│   ├── 📂 dashboard/              # Dashboard widgets & charts
-│   └── 📂 clients/                # Client components
-│
-├── 📂 lib/
-│   ├── supabase.ts                # Supabase client
-│   ├── validations.ts             # Zod schemas
-│   └── utils.ts                   # Helper functions
-│
-├── 📂 store/
-│   └── invoiceStore.ts            # Zustand state
-│
-└── 📂 types/
-    └── index.ts                   # TypeScript types & interfaces
+│   │   ├── LineItems.tsx
+│   │   └── InvoicePreview.tsx
+│   ├── clients/
+│   │   ├── ClientTable.tsx
+│   │   └── ClientForm.tsx
+│   └── shared/
+│       ├── Sidebar.tsx
+│       ├── Navbar.tsx
+│       └── ThemeToggle.tsx
+├── lib/
+│   ├── supabase.ts
+│   └── utils.ts
+├── store/
+│   └── invoiceStore.ts
+└── types/
+    └── index.ts
 ```
 
 <br/>
