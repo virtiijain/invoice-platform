@@ -90,51 +90,96 @@
 
 ---
 
-## 📁 Project Structure
+## 🚀 Progress Overview
 
+![Progress](https://img.shields.io/badge/Progress-26%25-orange)
+![Done](https://img.shields.io/badge/Done-6%2F23-green)
+![Remaining](https://img.shields.io/badge/Remaining-17%2F23-red)
+
+---
+
+## 🎨 Frontend
+
+### Pages & Views
+| # | Feature | Branch | Status | Date |
+|---|---------|--------|--------|------|
+| 1 | Login + Signup | `feature/auth` | ✅ Done | Mar 6 |
+| 2 | Sidebar + Navbar + Dashboard UI | `feature/layout` | ✅ Done | Mar 7 |
+| 3 | Client Manager Page | `feature/clients` | ⬜ Todo | - |
+| 4 | Invoice List Page | `feature/invoices` | ⬜ Todo | - |
+| 5 | Invoice Builder + Live Preview | `feature/invoice-builder` | ⬜ Todo | - |
+| 6 | Settings Page | `feature/settings` | ⬜ Todo | - |
+
+### UI Features
+| # | Feature | Branch | Status | Date |
+|---|---------|--------|--------|------|
+| 7 | PDF Export | `feature/pdf` | ⬜ Todo | - |
+| 8 | Dark/Light Mode | `feature/theme` | ⬜ Todo | - |
+| 9 | Responsive Design | `feature/responsive` | ⬜ Todo | - |
+
+### State Management
+| # | Feature | Status | Date |
+|---|---------|--------|------|
+| 10 | Zustand — Invoice Store | ✅ Done | Mar 6 |
+| 11 | React Hook Form + Zod — Invoice Builder | ⬜ Todo | - |
+| 12 | React Hook Form + Zod — Client Form | ⬜ Todo | - |
+
+---
+
+## ⚙️ Backend
+
+### API Routes
+| # | Endpoint | Method | Branch | Status | Date |
+|---|----------|--------|--------|--------|------|
+| 13 | `/api/invoices` | GET | `feature/api` | ⬜ Todo | - |
+| 14 | `/api/invoices` | POST | `feature/api` | ⬜ Todo | - |
+| 15 | `/api/invoices/:id` | PATCH | `feature/api` | ⬜ Todo | - |
+| 16 | `/api/invoices/:id` | DELETE | `feature/api` | ⬜ Todo | - |
+| 17 | `/api/clients` | GET | `feature/api` | ⬜ Todo | - |
+| 18 | `/api/clients` | POST | `feature/api` | ⬜ Todo | - |
+
+### Auth
+| # | Feature | Status | Date |
+|---|---------|--------|------|
+| 19 | Supabase Auth — Email/Password | ✅ Done | Mar 6 |
+
+---
+
+## 🗄️ Database
+
+| # | Table | Status | Date |
+|---|-------|--------|------|
+| 20 | `users` (Supabase Auth) | ✅ Done | Mar 6 |
+| 21 | `clients` | ✅ Done | Mar 6 |
+| 22 | `invoices` | ✅ Done | Mar 6 |
+| 23 | `invoice_items` | ✅ Done | Mar 6 |
+| 24 | RLS Policies | ✅ Done | Mar 6 |
+
+---
+
+## 🌿 Branch Strategy
 ```
-src/
-├── app/
-│   ├── (auth)/
-│   │   ├── login/page.tsx
-│   │   └── signup/page.tsx
-│   ├── (dashboard)/
-│   │   ├── layout.tsx          ← Sidebar + Navbar
-│   │   ├── dashboard/page.tsx
-│   │   ├── invoices/
-│   │   │   ├── page.tsx        ← Invoice List
-│   │   │   └── new/page.tsx    ← Invoice Builder
-│   │   ├── clients/page.tsx
-│   │   └── settings/page.tsx
-│   ├── layout.tsx              ← Root layout
-│   └── page.tsx                ← Redirect to login/dashboard
-├── components/
-│   ├── ui/                     ← shadcn components
-│   ├── dashboard/
-│   │   ├── StatsCards.tsx
-│   │   └── RevenueChart.tsx
-│   ├── invoices/
-│   │   ├── InvoiceTable.tsx
-│   │   ├── InvoiceBuilder.tsx
-│   │   ├── LineItems.tsx
-│   │   └── InvoicePreview.tsx
-│   ├── clients/
-│   │   ├── ClientTable.tsx
-│   │   └── ClientForm.tsx
-│   └── shared/
-│       ├── Sidebar.tsx
-│       ├── Navbar.tsx
-│       └── ThemeToggle.tsx
-├── lib/
-│   ├── supabase.ts
-│   └── utils.ts
-├── store/
-│   └── invoiceStore.ts
-└── types/
-    └── index.ts
+main          → Production
+develop       → Staging
+feature/*     → Individual features
 ```
 
-<br/>
+---
+
+## 📦 Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Framework | Next.js 16 (App Router) |
+| Language | TypeScript |
+| Styling | Tailwind CSS + shadcn/ui |
+| Backend | Next.js API Routes |
+| Database | Supabase (Postgres) |
+| Auth | Supabase Auth |
+| PDF | jsPDF |
+| Forms | React Hook Form + Zod |
+| Charts | Recharts |
+| State | Zustand |
 
 ---
 
