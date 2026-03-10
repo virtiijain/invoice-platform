@@ -24,7 +24,7 @@ export default function LoginPage() {
       setLoading(false);
       return;
     }
-    router.push("/dashboard");
+    router.replace("/dashboard");
   };
 
   const inputStyle = {
