@@ -1,191 +1,116 @@
 <div align="center">
 
-```
-██╗███╗   ██╗██╗   ██╗ ██████╗ ██╗ ██████╗███████╗
-██║████╗  ██║██║   ██║██╔═══██╗██║██╔════╝██╔════╝
-██║██╔██╗ ██║██║   ██║██║   ██║██║██║     █████╗  
-██║██║╚██╗██║╚██╗ ██╔╝██║   ██║██║██║     ██╔══╝  
-██║██║ ╚████║ ╚████╔╝ ╚██████╔╝██║╚██████╗███████╗
-╚═╝╚═╝  ╚═══╝  ╚═══╝   ╚═════╝ ╚═╝ ╚═════╝╚══════╝
-```
+<br/>
 
-# 🧾 Invoice & Billing Automation Tool
+# ⚡ InvoicePro
 
-**Create. Send. Get Paid. — All in one place.**
+### Bill smarter. Get paid faster.
 
-[![Next.js](https://img.shields.io/badge/Next.js_14-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)](https://nextjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
-[![Supabase](https://img.shields.io/badge/Supabase-3FCF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com/)
-[![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-000000?style=for-the-badge&logo=shadcnui&logoColor=white)](https://ui.shadcn.com/)
+A full-stack Invoice & Billing platform for freelancers and small businesses —
+create professional invoices, track payments, and manage clients with a sleek dark UI.
 
 <br/>
 
-> A modern, full-stack Invoice & Billing Automation platform for **freelancers** and **small businesses**  
-> to create professional invoices, track payments, and manage clients — all with a beautiful UI.
-
-<br/>
-
----
+![Next.js](https://img.shields.io/badge/Next.js_16-black?style=for-the-badge&logo=next.js&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
+![Tailwind](https://img.shields.io/badge/Tailwind-38BDF8?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-f97316?style=for-the-badge)
 
 </div>
-
-<br/>
-
-## 📸 Screenshots
-
-<div align="center">
-
-| Dashboard | Invoice Builder | Client Manager |
-|-----------|----------------|----------------|
-| ![Dashboard](https://placehold.co/380x220/0f172a/38bdf8?text=Dashboard+View&font=raleway) | ![Builder](https://placehold.co/380x220/0f172a/a78bfa?text=Invoice+Builder&font=raleway) | ![Clients](https://placehold.co/380x220/0f172a/34d399?text=Client+Manager&font=raleway) |
-
-</div>
-
-<br/>
 
 ---
 
 ## ✨ Features
 
-<br/>
+| | Feature | Description |
+|---|---|---|
+| 📊 | **Revenue Dashboard** | Charts, stats, revenue overview |
+| 🧾 | **Invoice Builder** | Line items, auto tax calculation |
+| 📄 | **PDF Export** | One-click professional PDF download |
+| 👥 | **Client Manager** | Full CRUD, search, GST support |
+| 💰 | **Payment Tracking** | Paid / Unpaid / Overdue status |
+| 🔐 | **Auth + RLS** | Supabase Auth with row-level security |
+| ⚙️ | **Settings** | Company info, currency, payment terms |
+| 📱 | **Responsive** | Works on all screen sizes |
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                                                             │
-│   📊  Revenue Dashboard    →  Charts, stats, overview       │
-│   🧾  Invoice Builder      →  Live preview, auto-calculate  │
-│   📄  PDF Export           →  One-click professional PDF    │
-│   👥  Client Manager       →  Full client history & details │
-│   💰  Payment Tracking     →  Paid / Unpaid / Overdue       │
-│   🔐  Auth & Security      →  Supabase Auth, row-level      │
-│   🌙  Dark / Light Mode    →  System preference support     │
-│   📱  Fully Responsive     →  Works on all screen sizes     │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
+---
 
-<br/>
+## 🏗️ Architecture
+
+| Browser | API Layer | Supabase |
+|---------|-----------|---------|
+| Next.js App Router | `/api/invoices` | Auth Service |
+| Zustand — State | `/api/clients` | `clients` table |
+| shadcn/ui — Components | `middleware.ts` | `invoices` table |
+| Recharts — Charts | Route protection | `invoice_items` table |
+| jsPDF — PDF Export | Auth check | RLS Policies ✓ |
 
 ---
 
 ## 🛠️ Tech Stack
 
-<br/>
-
 | Layer | Technology | Purpose |
 |-------|-----------|---------|
-| 🖼️ **Framework** | Next.js 14 (App Router) | Full-stack React framework |
-| 🔷 **Language** | TypeScript | Type safety throughout |
-| 🎨 **Styling** | Tailwind CSS + shadcn/ui | UI components & design system |
-| 🗄️ **Database** | Supabase (PostgreSQL) | Data storage & real-time |
-| 🔐 **Auth** | Supabase Auth | Email/password authentication |
-| 📄 **PDF** | react-pdf / jsPDF | Invoice PDF generation |
-| 📋 **Forms** | React Hook Form + Zod | Form handling & validation |
-| 📊 **Charts** | Recharts | Dashboard data visualization |
-| 🗃️ **State** | Zustand | Client-side state management |
-| 🚀 **Deploy** | Vercel | Hosting & CI/CD |
-
-<br/>
+| 🖼️ Framework | Next.js 16 (App Router) | Full-stack React framework |
+| 🔷 Language | TypeScript | Type safety throughout |
+| 🎨 Styling | Tailwind CSS + shadcn/ui | UI components & design |
+| 🗄️ Database | Supabase (PostgreSQL) | Data storage |
+| 🔐 Auth | Supabase Auth | Email/password login |
+| 📄 PDF | jsPDF + jspdf-autotable | Invoice PDF generation |
+| 📊 Charts | Recharts | Dashboard charts |
+| 🗃️ State | Zustand | Client-side state |
+| 🚀 Deploy | Vercel *(coming soon)* | Hosting & CI/CD |
 
 ---
 
-## 🚀 Progress Overview
-
-![Progress](https://img.shields.io/badge/Progress-26%25-orange)
-![Done](https://img.shields.io/badge/Done-6%2F23-green)
-![Remaining](https://img.shields.io/badge/Remaining-17%2F23-red)
-
----
-
-## 🎨 Frontend
-
-### Pages & Views
-| # | Feature | Branch | Status | Date |
-|---|---------|--------|--------|------|
-| 1 | Login + Signup | `feature/auth` | ✅ Done | Mar 6 |
-| 2 | Sidebar + Navbar + Dashboard UI | `feature/layout` | ✅ Done | Mar 7 |
-| 3 | Client Manager Page | `feature/clients` | ⬜ Todo | - |
-| 4 | Invoice List Page | `feature/invoices` | ⬜ Todo | - |
-| 5 | Invoice Builder + Live Preview | `feature/invoice-builder` | ⬜ Todo | - |
-| 6 | Settings Page | `feature/settings` | ⬜ Todo | - |
-
-### UI Features
-| # | Feature | Branch | Status | Date |
-|---|---------|--------|--------|------|
-| 7 | PDF Export | `feature/pdf` | ⬜ Todo | - |
-| 8 | Dark/Light Mode | `feature/theme` | ⬜ Todo | - |
-| 9 | Responsive Design | `feature/responsive` | ⬜ Todo | - |
-
-### State Management
-| # | Feature | Status | Date |
-|---|---------|--------|------|
-| 10 | Zustand — Invoice Store | ✅ Done | Mar 6 |
-| 11 | React Hook Form + Zod — Invoice Builder | ⬜ Todo | - |
-| 12 | React Hook Form + Zod — Client Form | ⬜ Todo | - |
-
----
-
-## ⚙️ Backend
-
-### API Routes
-| # | Endpoint | Method | Branch | Status | Date |
-|---|----------|--------|--------|--------|------|
-| 13 | `/api/invoices` | GET | `feature/api` | ⬜ Todo | - |
-| 14 | `/api/invoices` | POST | `feature/api` | ⬜ Todo | - |
-| 15 | `/api/invoices/:id` | PATCH | `feature/api` | ⬜ Todo | - |
-| 16 | `/api/invoices/:id` | DELETE | `feature/api` | ⬜ Todo | - |
-| 17 | `/api/clients` | GET | `feature/api` | ⬜ Todo | - |
-| 18 | `/api/clients` | POST | `feature/api` | ⬜ Todo | - |
-
-### Auth
-| # | Feature | Status | Date |
-|---|---------|--------|------|
-| 19 | Supabase Auth — Email/Password | ✅ Done | Mar 6 |
-
----
-
-## 🗄️ Database
-
-| # | Table | Status | Date |
-|---|-------|--------|------|
-| 20 | `users` (Supabase Auth) | ✅ Done | Mar 6 |
-| 21 | `clients` | ✅ Done | Mar 6 |
-| 22 | `invoices` | ✅ Done | Mar 6 |
-| 23 | `invoice_items` | ✅ Done | Mar 6 |
-| 24 | RLS Policies | ✅ Done | Mar 6 |
-
----
-
-## 🌿 Branch Strategy
-```
-main          → Production
-develop       → Staging
-feature/*     → Individual features
+## 🔄 User Flow
+```mermaid
+flowchart TD
+    A[🌐 Landing] --> B[🔐 Login / Signup]
+    B --> C[📊 Dashboard]
+    C --> D[👥 Clients]
+    C --> E[🧾 Invoices]
+    D --> F[Add / Edit Client]
+    E --> G[New Invoice]
+    F --> G
+    G --> H[Select Client]
+    H --> I[Add Line Items]
+    I --> J[Set Tax & Dates]
+    J --> K[Invoice Detail]
+    K --> L[📄 Download PDF]
+    K --> M[💰 Update Status]
+    M --> N[Paid ✓]
+    M --> O[Unpaid]
+    M --> P[Overdue]
+    C --> Q[⚙️ Settings]
+    Q --> R[Company Info & GST]
 ```
 
 ---
 
-## 📦 Tech Stack
+## 📅 Build Log
 
-| Layer | Technology |
-|-------|-----------|
-| Framework | Next.js 16 (App Router) |
-| Language | TypeScript |
-| Styling | Tailwind CSS + shadcn/ui |
-| Backend | Next.js API Routes |
-| Database | Supabase (Postgres) |
-| Auth | Supabase Auth |
-| PDF | jsPDF |
-| Forms | React Hook Form + Zod |
-| Charts | Recharts |
-| State | Zustand |
+| Date | What was built |
+|------|---------------|
+| Mar 6 | Project setup · Supabase schema · Auth (Login/Signup) |
+| Mar 7 | Sidebar · Navbar · Dashboard · Layout |
+| Mar 10 | Client Manager · CRUD · API routes |
+| Mar 11 | Invoice List · Builder · Detail page · API |
+| Mar 12 | Settings page (company info, GST, currency) |
+| Mar 13 | PDF export with jsPDF |
 
 ---
 
-<div align="center">
+## 🚧 Roadmap
 
-  ⭐ **Star this repo if you found it helpful!** ⭐
-
-</div>
-
+- [x] Authentication
+- [x] Dashboard with charts
+- [x] Client Manager
+- [x] Invoice Builder
+- [x] PDF Export
+- [x] Settings
+- [ ] Responsive Design
+- [ ] Docker
+- [ ] CI/CD (GitHub Actions)
+- [ ] Deploy to Vercel
