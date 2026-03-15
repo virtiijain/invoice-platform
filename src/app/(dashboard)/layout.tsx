@@ -10,24 +10,24 @@ import { colors } from '@/styles/theme'
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter()
   const [checking, setChecking] = useState(true)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
-    // Pehle existing session check karo
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
+
+  useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
-      if (!session) {
-        router.replace('/login')
-      } else {
-        setChecking(false)
-      }
+      if (!session) router.replace('/login')
+      else setChecking(false)
     })
 
-    // Auth state changes sun-o (login ke baad session milti hai yahan)
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (!session) {
-        router.replace('/login')
-      } else {
-        setChecking(false)
-      }
+      if (!session) router.replace('/login')
+      else setChecking(false)
     })
 
     return () => subscription.unsubscribe()
@@ -50,9 +50,20 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   return (
     <div style={{ display: 'flex', minHeight: '100vh', background: colors.bgBase }}>
       <Sidebar />
-      <div style={{ flex: 1, marginLeft: 68, display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      <div style={{
+        flex: 1,
+        marginLeft: isMobile ? 0 : 68,
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '100vh',
+      }}>
         <Navbar />
-        <main style={{ flex: 1, padding: '28px', overflowY: 'auto' }}>
+        <main style={{
+          flex: 1,
+          padding: isMobile ? '16px' : '28px',
+          paddingBottom: isMobile ? '80px' : '28px',
+          overflowY: 'auto',
+        }}>
           {children}
         </main>
       </div>
