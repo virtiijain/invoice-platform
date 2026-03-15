@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { colors, fonts, gradients } from '@/styles/theme'
-import { Plus, Search, Filter, Eye, Edit2, Trash2, FileText } from 'lucide-react'
+import { Plus, Search, Eye, Trash2, FileText } from 'lucide-react'
 
 type Invoice = {
   id: string
@@ -26,6 +26,14 @@ export default function InvoicesPage() {
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState<'all' | 'paid' | 'unpaid' | 'overdue'>('all')
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
 
   const fetchInvoices = async () => {
     const res = await fetch('/api/invoices')
@@ -81,15 +89,15 @@ export default function InvoicesPage() {
             fontSize: 14, fontWeight: 600, fontFamily: fonts.body,
             boxShadow: '0 4px 12px rgba(249,115,22,0.3)',
           }}>
-            <Plus size={16} /> New Invoice
+            <Plus size={16} /> {!isMobile && 'New Invoice'}
           </button>
         </Link>
       </div>
 
-      {/* Search + Filter */}
-      <div style={{ display: 'flex', gap: 12, marginBottom: 20 }}>
+      {/* Search */}
+      <div style={{ marginBottom: 12 }}>
         <div style={{
-          flex: 1, display: 'flex', alignItems: 'center', gap: 10,
+          display: 'flex', alignItems: 'center', gap: 10,
           background: 'rgba(255,255,255,0.05)',
           border: `1px solid ${colors.borderDefault}`,
           borderRadius: 10, padding: '10px 14px',
@@ -102,29 +110,30 @@ export default function InvoicesPage() {
             onChange={e => setSearch(e.target.value)}
           />
         </div>
-
-        {/* Status Filter */}
-        <div style={{ display: 'flex', gap: 8 }}>
-          {(['all', 'paid', 'unpaid', 'overdue'] as const).map(s => (
-            <button key={s} onClick={() => setStatusFilter(s)} style={{
-              padding: '10px 16px', borderRadius: 10, border: '1px solid',
-              fontSize: 13, fontWeight: 500, cursor: 'pointer',
-              fontFamily: fonts.body, textTransform: 'capitalize',
-              background: statusFilter === s
-                ? s === 'all' ? gradients.primary : statusColors[s]?.bg
-                : 'rgba(255,255,255,0.04)',
-              borderColor: statusFilter === s
-                ? s === 'all' ? 'transparent' : statusColors[s]?.border ?? 'transparent'
-                : colors.borderDefault,
-              color: statusFilter === s
-                ? s === 'all' ? '#fff' : statusColors[s]?.color
-                : colors.textMuted,
-            }}>{s}</button>
-          ))}
-        </div>
       </div>
 
-      {/* Invoice Table */}
+      {/* Status Filter */}
+      <div style={{ display: 'flex', gap: 8, marginBottom: 20, overflowX: 'auto', paddingBottom: 4 }}>
+        {(['all', 'paid', 'unpaid', 'overdue'] as const).map(s => (
+          <button key={s} onClick={() => setStatusFilter(s)} style={{
+            padding: '8px 16px', borderRadius: 10, border: '1px solid',
+            fontSize: 13, fontWeight: 500, cursor: 'pointer',
+            fontFamily: fonts.body, textTransform: 'capitalize',
+            whiteSpace: 'nowrap', flexShrink: 0,
+            background: statusFilter === s
+              ? s === 'all' ? gradients.primary : statusColors[s]?.bg
+              : 'rgba(255,255,255,0.04)',
+            borderColor: statusFilter === s
+              ? s === 'all' ? 'transparent' : statusColors[s]?.border ?? 'transparent'
+              : colors.borderDefault,
+            color: statusFilter === s
+              ? s === 'all' ? '#fff' : statusColors[s]?.color
+              : colors.textMuted,
+          }}>{s}</button>
+        ))}
+      </div>
+
+      {/* Content */}
       {loading ? (
         <div style={{ textAlign: 'center', padding: 60, color: colors.textMuted, fontFamily: fonts.body }}>Loading...</div>
       ) : filtered.length === 0 ? (
@@ -142,7 +151,102 @@ export default function InvoicesPage() {
             }}>Create Invoice</button>
           </Link>
         </div>
+      ) : isMobile ? (
+        /* ── MOBILE: Cards ── */
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          {filtered.map(invoice => {
+            const s = statusColors[invoice.status]
+            return (
+              <div key={invoice.id} style={{
+                background: 'rgba(255,255,255,0.04)',
+                border: `1px solid ${colors.borderDefault}`,
+                borderRadius: 14, padding: '16px',
+              }}>
+                {/* Top Row */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                    <div style={{
+                      width: 32, height: 32, borderRadius: 8,
+                      background: colors.primarySubtle,
+                      border: `1px solid ${colors.primaryBorder}`,
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    }}>
+                      <FileText size={14} color={colors.primary} />
+                    </div>
+                    <div>
+                      <p style={{ color: colors.textPrimary, fontSize: 14, fontWeight: 600, margin: 0, fontFamily: fonts.body }}>
+                        {invoice.invoice_number}
+                      </p>
+                      <p style={{ color: colors.textMuted, fontSize: 12, margin: 0, fontFamily: fonts.body }}>
+                        {invoice.clients?.name}
+                      </p>
+                    </div>
+                  </div>
+                  <span style={{
+                    background: s?.bg, border: `1px solid ${s?.border}`,
+                    color: s?.color, borderRadius: 8,
+                    padding: '4px 10px', fontSize: 12, fontWeight: 600,
+                    fontFamily: fonts.body,
+                  }}>
+                    {invoice.status}
+                  </span>
+                </div>
+
+                {/* Bottom Row */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div>
+                    <p style={{ color: colors.textPrimary, fontSize: 16, fontWeight: 700, margin: 0, fontFamily: fonts.body }}>
+                      ₹{invoice.total?.toLocaleString('en-IN')}
+                    </p>
+                    <p style={{ color: colors.textMuted, fontSize: 12, margin: 0, fontFamily: fonts.body }}>
+                      Due: {invoice.due_date ? new Date(invoice.due_date).toLocaleDateString('en-IN') : '—'}
+                    </p>
+                  </div>
+
+                  {/* Actions */}
+                  <div style={{ display: 'flex', gap: 8 }}>
+                    <select
+                      value={invoice.status}
+                      onChange={e => handleStatusChange(invoice.id, e.target.value)}
+                      style={{
+                        background: s?.bg, border: `1px solid ${s?.border}`,
+                        color: s?.color, borderRadius: 8,
+                        padding: '6px 10px', fontSize: 12, fontWeight: 600,
+                        cursor: 'pointer', fontFamily: fonts.body, outline: 'none',
+                      }}
+                    >
+                      <option value="paid">Paid</option>
+                      <option value="unpaid">Unpaid</option>
+                      <option value="overdue">Overdue</option>
+                    </select>
+                    <Link href={`/invoices/${invoice.id}`}>
+                      <button style={{
+                        width: 34, height: 34, borderRadius: 8,
+                        background: 'rgba(255,255,255,0.06)',
+                        border: `1px solid ${colors.borderDefault}`,
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        cursor: 'pointer',
+                      }}>
+                        <Eye size={14} color={colors.textMuted} />
+                      </button>
+                    </Link>
+                    <button onClick={() => handleDelete(invoice.id)} style={{
+                      width: 34, height: 34, borderRadius: 8,
+                      background: 'rgba(248,113,113,0.1)',
+                      border: '1px solid rgba(248,113,113,0.2)',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      cursor: 'pointer',
+                    }}>
+                      <Trash2 size={14} color="#f87171" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )
+          })}
+        </div>
       ) : (
+        /* ── DESKTOP: Table ── */
         <div style={{
           background: 'rgba(255,255,255,0.04)',
           border: `1px solid ${colors.borderDefault}`,
@@ -161,7 +265,6 @@ export default function InvoicesPage() {
             ))}
           </div>
 
-          {/* Table Rows */}
           {filtered.map(invoice => {
             const s = statusColors[invoice.status]
             return (
@@ -201,7 +304,6 @@ export default function InvoicesPage() {
                   {invoice.due_date ? new Date(invoice.due_date).toLocaleDateString('en-IN') : '—'}
                 </span>
 
-                {/* Status Dropdown */}
                 <select
                   value={invoice.status}
                   onChange={e => handleStatusChange(invoice.id, e.target.value)}
@@ -218,7 +320,6 @@ export default function InvoicesPage() {
                   <option value="overdue">Overdue</option>
                 </select>
 
-                {/* Actions */}
                 <div style={{ display: 'flex', gap: 6 }}>
                   <Link href={`/invoices/${invoice.id}`}>
                     <button className="action-btn" style={{

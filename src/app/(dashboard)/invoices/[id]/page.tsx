@@ -550,6 +550,8 @@ export default function InvoiceDetailPage() {
           onClick={() => generateInvoicePDF(invoice)}
           style={{
             display: "flex",
+            marginTop: 16,
+            paddingTop: 10,
             alignItems: "center",
             gap: 8,
             padding: "10px 20px",

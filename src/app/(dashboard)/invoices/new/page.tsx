@@ -13,6 +13,14 @@ export default function NewInvoicePage() {
   const [clients, setClients] = useState<Client[]>([])
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
 
   const [form, setForm] = useState({
     client_id: '',
@@ -114,10 +122,11 @@ export default function NewInvoicePage() {
         </div>
       )}
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
+      {/* Invoice Details + Client */}
+      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 16, marginBottom: 16 }}>
 
         {/* Invoice Details */}
-        <div style={{ background: 'rgba(255,255,255,0.04)', border: `1px solid ${colors.borderDefault}`, borderRadius: 16, padding: 24 }}>
+        <div style={{ background: 'rgba(255,255,255,0.04)', border: `1px solid ${colors.borderDefault}`, borderRadius: 16, padding: isMobile ? 16 : 24 }}>
           <h3 style={{ fontFamily: fonts.heading, fontSize: 16, fontWeight: 700, color: colors.textPrimary, margin: '0 0 20px' }}>Invoice Details</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
             <div>
@@ -143,14 +152,14 @@ export default function NewInvoicePage() {
         </div>
 
         {/* Client */}
-        <div style={{ background: 'rgba(255,255,255,0.04)', border: `1px solid ${colors.borderDefault}`, borderRadius: 16, padding: 24 }}>
+        <div style={{ background: 'rgba(255,255,255,0.04)', border: `1px solid ${colors.borderDefault}`, borderRadius: 16, padding: isMobile ? 16 : 24 }}>
           <h3 style={{ fontFamily: fonts.heading, fontSize: 16, fontWeight: 700, color: colors.textPrimary, margin: '0 0 20px' }}>Client</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
             <div>
               <label style={labelStyle}>Select Client</label>
               <select style={inputStyle} value={form.client_id}
                 onChange={e => setForm(p => ({ ...p, client_id: e.target.value }))}>
-                <option value="">-- Client chuno --</option>
+                <option value="">-- Select Client --</option>
                 {clients.map(c => (
                   <option key={c.id} value={c.id}>{c.name} ({c.email})</option>
                 ))}
@@ -174,7 +183,7 @@ export default function NewInvoicePage() {
       </div>
 
       {/* Line Items */}
-      <div style={{ background: 'rgba(255,255,255,0.04)', border: `1px solid ${colors.borderDefault}`, borderRadius: 16, padding: 24, marginBottom: 16 }}>
+      <div style={{ background: 'rgba(255,255,255,0.04)', border: `1px solid ${colors.borderDefault}`, borderRadius: 16, padding: isMobile ? 16 : 24, marginBottom: 16 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
           <h3 style={{ fontFamily: fonts.heading, fontSize: 16, fontWeight: 700, color: colors.textPrimary, margin: 0 }}>Line Items</h3>
           <button onClick={addItem} style={{
@@ -188,46 +197,97 @@ export default function NewInvoicePage() {
           </button>
         </div>
 
-        {/* Header */}
-        <div style={{ display: 'grid', gridTemplateColumns: '3fr 1fr 1fr 1fr 40px', gap: 10, marginBottom: 10 }}>
-          {['Description', 'Qty', 'Rate (₹)', 'Amount (₹)', ''].map(h => (
-            <span key={h} style={{ color: colors.textMuted, fontSize: 12, fontWeight: 600, fontFamily: fonts.body, textTransform: 'uppercase', letterSpacing: '0.5px' }}>{h}</span>
-          ))}
-        </div>
+        {/* Desktop: Table Header */}
+        {!isMobile && (
+          <div style={{ display: 'grid', gridTemplateColumns: '3fr 1fr 1fr 1fr 40px', gap: 10, marginBottom: 10 }}>
+            {['Description', 'Qty', 'Rate (₹)', 'Amount (₹)', ''].map(h => (
+              <span key={h} style={{ color: colors.textMuted, fontSize: 12, fontWeight: 600, fontFamily: fonts.body, textTransform: 'uppercase', letterSpacing: '0.5px' }}>{h}</span>
+            ))}
+          </div>
+        )}
 
         {/* Items */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? 16 : 10 }}>
           {items.map((item, i) => (
-            <div key={i} style={{ display: 'grid', gridTemplateColumns: '3fr 1fr 1fr 1fr 40px', gap: 10, alignItems: 'center' }}>
-              <input style={inputStyle} placeholder="Web design, consulting..."
-                value={item.description}
-                onChange={e => updateItem(i, 'description', e.target.value)} />
-              <input style={inputStyle} type="number" min="1"
-                value={item.quantity}
-                onChange={e => updateItem(i, 'quantity', e.target.value)} />
-              <input style={inputStyle} type="number" min="0"
-                value={item.rate}
-                onChange={e => updateItem(i, 'rate', e.target.value)} />
-              <div style={{ ...inputStyle, background: 'rgba(255,255,255,0.02)', color: colors.primary, fontWeight: 600 }}>
-                ₹{item.amount.toLocaleString('en-IN')}
+            isMobile ? (
+              /* Mobile: Card per item */
+              <div key={i} style={{
+                background: 'rgba(255,255,255,0.03)',
+                border: `1px solid ${colors.borderDefault}`,
+                borderRadius: 12, padding: 14,
+                display: 'flex', flexDirection: 'column', gap: 10,
+              }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ color: colors.textMuted, fontSize: 12, fontFamily: fonts.body }}>Item {i + 1}</span>
+                  {items.length > 1 && (
+                    <button onClick={() => removeItem(i)} style={{
+                      width: 28, height: 28, borderRadius: 6,
+                      background: 'rgba(248,113,113,0.1)', border: '1px solid rgba(248,113,113,0.2)',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
+                    }}>
+                      <Trash2 size={13} color="#f87171" />
+                    </button>
+                  )}
+                </div>
+                <div>
+                  <label style={labelStyle}>Description</label>
+                  <input style={inputStyle} placeholder="Web design, consulting..."
+                    value={item.description}
+                    onChange={e => updateItem(i, 'description', e.target.value)} />
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+                  <div>
+                    <label style={labelStyle}>Qty</label>
+                    <input style={inputStyle} type="number" min="1"
+                      value={item.quantity}
+                      onChange={e => updateItem(i, 'quantity', e.target.value)} />
+                  </div>
+                  <div>
+                    <label style={labelStyle}>Rate (₹)</label>
+                    <input style={inputStyle} type="number" min="0"
+                      value={item.rate}
+                      onChange={e => updateItem(i, 'rate', e.target.value)} />
+                  </div>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 8, borderTop: `1px solid ${colors.borderDefault}` }}>
+                  <span style={{ color: colors.textMuted, fontSize: 13, fontFamily: fonts.body }}>Amount</span>
+                  <span style={{ color: colors.primary, fontSize: 15, fontWeight: 700, fontFamily: fonts.body }}>
+                    ₹{item.amount.toLocaleString('en-IN')}
+                  </span>
+                </div>
               </div>
-              {items.length > 1 && (
-                <button onClick={() => removeItem(i)} style={{
-                  width: 32, height: 32, borderRadius: 8,
-                  background: 'rgba(248,113,113,0.1)', border: '1px solid rgba(248,113,113,0.2)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  cursor: 'pointer',
-                }}>
-                  <Trash2 size={14} color="#f87171" />
-                </button>
-              )}
-            </div>
+            ) : (
+              /* Desktop: Row */
+              <div key={i} style={{ display: 'grid', gridTemplateColumns: '3fr 1fr 1fr 1fr 40px', gap: 10, alignItems: 'center' }}>
+                <input style={inputStyle} placeholder="Web design, consulting..."
+                  value={item.description}
+                  onChange={e => updateItem(i, 'description', e.target.value)} />
+                <input style={inputStyle} type="number" min="1"
+                  value={item.quantity}
+                  onChange={e => updateItem(i, 'quantity', e.target.value)} />
+                <input style={inputStyle} type="number" min="0"
+                  value={item.rate}
+                  onChange={e => updateItem(i, 'rate', e.target.value)} />
+                <div style={{ ...inputStyle, background: 'rgba(255,255,255,0.02)', color: colors.primary, fontWeight: 600 }}>
+                  ₹{item.amount.toLocaleString('en-IN')}
+                </div>
+                {items.length > 1 && (
+                  <button onClick={() => removeItem(i)} style={{
+                    width: 32, height: 32, borderRadius: 8,
+                    background: 'rgba(248,113,113,0.1)', border: '1px solid rgba(248,113,113,0.2)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
+                  }}>
+                    <Trash2 size={14} color="#f87171" />
+                  </button>
+                )}
+              </div>
+            )
           ))}
         </div>
 
         {/* Totals */}
         <div style={{ marginTop: 24, paddingTop: 20, borderTop: `1px solid ${colors.borderDefault}`, display: 'flex', justifyContent: 'flex-end' }}>
-          <div style={{ width: 280, display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <div style={{ width: isMobile ? '100%' : 280, display: 'flex', flexDirection: 'column', gap: 10 }}>
             {[
               { label: 'Subtotal', value: subtotal },
               { label: `Tax (${form.tax_rate}%)`, value: taxAmount },
@@ -246,7 +306,7 @@ export default function NewInvoicePage() {
       </div>
 
       {/* Submit */}
-      <div style={{ display: 'flex', gap: 12, justifyContent: 'flex-end' }}>
+      <div style={{ display: 'flex', gap: 12, justifyContent: isMobile ? 'stretch' : 'flex-end', flexDirection: isMobile ? 'column' : 'row' }}>
         <button onClick={() => router.push('/invoices')} style={{
           padding: '12px 24px', borderRadius: 10,
           background: 'rgba(255,255,255,0.05)', border: `1px solid ${colors.borderDefault}`,
@@ -254,7 +314,7 @@ export default function NewInvoicePage() {
           cursor: 'pointer', fontFamily: fonts.body,
         }}>Cancel</button>
         <button onClick={handleSubmit} disabled={saving} style={{
-          display: 'flex', alignItems: 'center', gap: 8,
+          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
           padding: '12px 28px', borderRadius: 10,
           background: gradients.primary, border: 'none',
           color: '#fff', fontSize: 14, fontWeight: 600,
