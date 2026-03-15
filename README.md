@@ -110,7 +110,7 @@ flowchart TD
 - [x] Invoice Builder
 - [x] PDF Export
 - [x] Settings
-- [ ] Responsive Design
-- [ ] Docker
+- [x] Responsive Design
+- [x] Docker
 - [ ] CI/CD (GitHub Actions)
 - [ ] Deploy to Vercel
