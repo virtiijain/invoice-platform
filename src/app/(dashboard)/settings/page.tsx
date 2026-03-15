@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { colors, fonts, gradients } from '@/styles/theme'
-import { Save, Building, FileText, CreditCard, Globe } from 'lucide-react'
+import { Save, Building, FileText, Globe } from 'lucide-react'
 
 type Settings = {
   company_name: string
@@ -32,6 +32,14 @@ export default function SettingsPage() {
   })
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
 
   useEffect(() => {
     const stored = localStorage.getItem('invoice_settings')
@@ -119,7 +127,7 @@ export default function SettingsPage() {
           <div key={title} style={{
             background: 'rgba(255,255,255,0.04)',
             border: `1px solid ${colors.borderDefault}`,
-            borderRadius: 16, padding: 24,
+            borderRadius: 16, padding: isMobile ? 16 : 24,
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
               <div style={{
@@ -129,11 +137,16 @@ export default function SettingsPage() {
               }}>
                 <Icon size={18} color={colors.primary} />
               </div>
-              <h3 style={{ fontFamily: fonts.heading, fontSize: 16, fontWeight: 700, color: colors.textPrimary, margin: 0 }}>{title}</h3>
+              <h3 style={{ fontFamily: fonts.heading, fontSize: 16, fontWeight: 700, color: colors.textPrimary, margin: 0 }}>
+                {title}
+              </h3>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+
+            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 14 }}>
               {fields.map(({ label, key, placeholder }) => (
-                <div key={key} style={{ gridColumn: key === 'address' || key === 'invoice_notes' ? 'span 2' : 'span 1' }}>
+                <div key={key} style={{
+                  gridColumn: !isMobile && (key === 'address' || key === 'invoice_notes') ? 'span 2' : 'span 1'
+                }}>
                   <label style={labelStyle}>{label}</label>
                   {key === 'address' || key === 'invoice_notes' ? (
                     <textarea
@@ -160,7 +173,7 @@ export default function SettingsPage() {
         <div style={{
           background: 'rgba(255,255,255,0.04)',
           border: `1px solid ${colors.borderDefault}`,
-          borderRadius: 16, padding: 24,
+          borderRadius: 16, padding: isMobile ? 16 : 24,
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
             <div style={{
@@ -170,9 +183,11 @@ export default function SettingsPage() {
             }}>
               <Globe size={18} color={colors.primary} />
             </div>
-            <h3 style={{ fontFamily: fonts.heading, fontSize: 16, fontWeight: 700, color: colors.textPrimary, margin: 0 }}>Preferences</h3>
+            <h3 style={{ fontFamily: fonts.heading, fontSize: 16, fontWeight: 700, color: colors.textPrimary, margin: 0 }}>
+              Preferences
+            </h3>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 14 }}>
             <div>
               <label style={labelStyle}>Currency</label>
               <select style={inputStyle} value={settings.currency}
@@ -193,10 +208,11 @@ export default function SettingsPage() {
         </div>
 
         {/* Save Button */}
-        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <div style={{ display: 'flex', justifyContent: isMobile ? 'stretch' : 'flex-end' }}>
           <button onClick={handleSave} disabled={saving} style={{
-            display: 'flex', alignItems: 'center', gap: 8,
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
             padding: '12px 28px', borderRadius: 10,
+            width: isMobile ? '100%' : 'auto',
             background: gradients.primary, border: 'none',
             color: '#fff', fontSize: 14, fontWeight: 600,
             cursor: 'pointer', fontFamily: fonts.body,
@@ -207,6 +223,7 @@ export default function SettingsPage() {
             {saving ? 'Saving...' : 'Save Settings'}
           </button>
         </div>
+
       </div>
     </div>
   )

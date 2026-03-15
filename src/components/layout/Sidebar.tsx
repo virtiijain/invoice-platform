@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { colors, fonts, gradients } from '@/styles/theme'
@@ -25,14 +25,84 @@ const navItems = [
 
 export default function Sidebar() {
   const [expanded, setExpanded] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const pathname = usePathname()
   const router = useRouter()
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
 
   const handleLogout = async () => {
     await supabase.auth.signOut()
     router.push('/login')
   }
 
+  // ─── MOBILE: Bottom Navigation Bar ───
+  if (isMobile) {
+    return (
+      <nav style={{
+        position: 'fixed',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        height: 64,
+        background: '#0f172a',
+        borderTop: `1px solid ${colors.borderPanel}`,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        zIndex: 100,
+        paddingBottom: 'env(safe-area-inset-bottom)',
+      }}>
+        {navItems.map(({ href, label, icon: Icon }) => {
+          const isActive = pathname === href || pathname.startsWith(href + '/')
+          return (
+            <Link key={href} href={href} style={{ textDecoration: 'none' }}>
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: 3,
+                padding: '6px 12px',
+                borderRadius: 10,
+                background: isActive ? colors.primarySubtle : 'transparent',
+              }}>
+                <Icon size={20} color={isActive ? colors.primary : colors.textMuted} />
+                <span style={{
+                  fontSize: 10,
+                  color: isActive ? colors.primary : colors.textMuted,
+                  fontFamily: fonts.body,
+                  fontWeight: isActive ? 600 : 400,
+                }}>{label}</span>
+              </div>
+            </Link>
+          )
+        })}
+
+        {/* New Invoice button */}
+        <Link href="/invoices/new" style={{ textDecoration: 'none' }}>
+          <div style={{
+            width: 44,
+            height: 44,
+            background: gradients.primary,
+            borderRadius: 12,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 4px 12px rgba(249,115,22,0.4)',
+          }}>
+            <Plus size={20} color="#fff" />
+          </div>
+        </Link>
+      </nav>
+    )
+  }
+
+  // ─── DESKTOP: Original Sidebar ───
   return (
     <aside
       onMouseEnter={() => setExpanded(true)}
@@ -79,7 +149,6 @@ export default function Sidebar() {
             fontWeight: 800,
             color: colors.textPrimary,
             whiteSpace: 'nowrap',
-            overflow: 'hidden',
           }}>InvoicePro</span>
         )}
       </div>
@@ -95,7 +164,6 @@ export default function Sidebar() {
             background: gradients.primary,
             borderRadius: 10,
             cursor: 'pointer',
-            transition: 'opacity 0.2s',
             boxShadow: '0 4px 12px rgba(249,115,22,0.3)',
           }}>
             <Plus size={18} color="#fff" style={{ flexShrink: 0 }} />
@@ -129,11 +197,7 @@ export default function Sidebar() {
                 background: isActive ? colors.primarySubtle : 'transparent',
                 border: `1px solid ${isActive ? colors.primaryBorder : 'transparent'}`,
               }}>
-                <Icon
-                  size={20}
-                  color={isActive ? colors.primary : colors.textMuted}
-                  style={{ flexShrink: 0 }}
-                />
+                <Icon size={20} color={isActive ? colors.primary : colors.textMuted} style={{ flexShrink: 0 }} />
                 {expanded && (
                   <span style={{
                     color: isActive ? colors.textPrimary : colors.textSecondary,
@@ -144,9 +208,7 @@ export default function Sidebar() {
                     flex: 1,
                   }}>{label}</span>
                 )}
-                {expanded && isActive && (
-                  <ChevronRight size={14} color={colors.primary} />
-                )}
+                {expanded && isActive && <ChevronRight size={14} color={colors.primary} />}
               </div>
             </Link>
           )
