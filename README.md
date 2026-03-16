@@ -2,115 +2,81 @@
 
 <br/>
 
-# ⚡ InvoicePro
+```
+██╗███╗   ██╗██╗   ██╗ ██████╗ ██╗ ██████╗███████╗
+██║████╗  ██║██║   ██║██╔═══██╗██║██╔════╝██╔════╝
+██║██╔██╗ ██║██║   ██║██║   ██║██║██║     █████╗  
+██║██║╚██╗██║╚██╗ ██╔╝██║   ██║██║██║     ██╔══╝  
+██║██║ ╚████║ ╚████╔╝ ╚██████╔╝██║╚██████╗███████╗
+╚═╝╚═╝  ╚═══╝  ╚═══╝   ╚═════╝ ╚═╝ ╚═════╝╚══════╝
+```
 
-### Bill smarter. Get paid faster.
+### **Invoice & Billing Platform for Freelancers & Small Businesses**
 
-A full-stack Invoice & Billing platform for freelancers and small businesses —
-create professional invoices, track payments, and manage clients with a sleek dark UI.
+*Create professional invoices · Track payments · Manage clients — all in one place.*
 
 <br/>
 
-![Next.js](https://img.shields.io/badge/Next.js_16-black?style=for-the-badge&logo=next.js&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
-![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
-![Tailwind](https://img.shields.io/badge/Tailwind-38BDF8?style=for-the-badge&logo=tailwindcss&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-f97316?style=for-the-badge)
+[![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=nextdotjs)](https://nextjs.org)
+[![Supabase](https://img.shields.io/badge/Supabase-Auth%20%2B%20DB-3ECF8E?style=flat-square&logo=supabase)](https://supabase.com)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=flat-square&logo=typescript)](https://typescriptlang.org)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-06B6D4?style=flat-square&logo=tailwindcss)](https://tailwindcss.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](LICENSE)
+
+<br/>
 
 </div>
 
 ---
 
-## ✨ Features
+## ✦ Features
 
 | | Feature | Description |
-|---|---|---|
-| 📊 | **Revenue Dashboard** | Charts, stats, revenue overview |
-| 🧾 | **Invoice Builder** | Line items, auto tax calculation |
-| 📄 | **PDF Export** | One-click professional PDF download |
-| 👥 | **Client Manager** | Full CRUD, search, GST support |
-| 💰 | **Payment Tracking** | Paid / Unpaid / Overdue status |
-| 🔐 | **Auth + RLS** | Supabase Auth with row-level security |
-| ⚙️ | **Settings** | Company info, currency, payment terms |
-| 📱 | **Responsive** | Works on all screen sizes |
+|:---:|:---|:---|
+| 📊 | **Revenue Dashboard** | Real-time charts, revenue stats, and financial overview at a glance |
+| 🧾 | **Invoice Builder** | Add line items, apply discounts, and auto-calculate taxes instantly |
+| 📄 | **PDF Export** | One-click professional PDF download — ready to send to clients |
+| 👥 | **Client Manager** | Full CRUD operations, smart search, and GST/tax ID support |
+| 💰 | **Payment Tracking** | Visual status for every invoice — Paid / Unpaid / Overdue |
+| 🔐 | **Auth + RLS** | Supabase Auth with Row-Level Security — your data stays yours |
+| ⚙️ | **Settings** | Customize company info, preferred currency, and payment terms |
+| 📱 | **Responsive Design** | Optimized for desktop, tablet, and mobile |
 
 ---
 
-## 🏗️ Architecture
+## 🏗️ Tech Stack
 
-| Browser | API Layer | Supabase |
-|---------|-----------|---------|
-| Next.js App Router | `/api/invoices` | Auth Service |
-| Zustand — State | `/api/clients` | `clients` table |
-| shadcn/ui — Components | `middleware.ts` | `invoices` table |
-| Recharts — Charts | Route protection | `invoice_items` table |
-| jsPDF — PDF Export | Auth check | RLS Policies ✓ |
-
----
-
-## 🛠️ Tech Stack
-
-| Layer | Technology | Purpose |
-|-------|-----------|---------|
-| 🖼️ Framework | Next.js 16 (App Router) | Full-stack React framework |
-| 🔷 Language | TypeScript | Type safety throughout |
-| 🎨 Styling | Tailwind CSS + shadcn/ui | UI components & design |
-| 🗄️ Database | Supabase (PostgreSQL) | Data storage |
-| 🔐 Auth | Supabase Auth | Email/password login |
-| 📄 PDF | jsPDF + jspdf-autotable | Invoice PDF generation |
-| 📊 Charts | Recharts | Dashboard charts |
-| 🗃️ State | Zustand | Client-side state |
-| 🚀 Deploy | Vercel *(coming soon)* | Hosting & CI/CD |
+| Layer | Technology |
+|:---|:---|
+| **Framework** | Next.js 15 (App Router) |
+| **Language** | TypeScript |
+| **Styling** | Tailwind CSS |
+| **Database** | Supabase (PostgreSQL) |
+| **Auth** | Supabase Auth with RLS |
+| **PDF Generation** | React-PDF / jsPDF |
+| **Charts** | Recharts |
+| **Deployment** | Vercel |
 
 ---
 
-## 🔄 User Flow
-```mermaid
-flowchart TD
-    A[🌐 Landing] --> B[🔐 Login / Signup]
-    B --> C[📊 Dashboard]
-    C --> D[👥 Clients]
-    C --> E[🧾 Invoices]
-    D --> F[Add / Edit Client]
-    E --> G[New Invoice]
-    F --> G
-    G --> H[Select Client]
-    H --> I[Add Line Items]
-    I --> J[Set Tax & Dates]
-    J --> K[Invoice Detail]
-    K --> L[📄 Download PDF]
-    K --> M[💰 Update Status]
-    M --> N[Paid ✓]
-    M --> O[Unpaid]
-    M --> P[Overdue]
-    C --> Q[⚙️ Settings]
-    Q --> R[Company Info & GST]
-```
+## 📸 Screenshots
+
+> _Add screenshots here once deployed. Suggested: Dashboard, Invoice Builder, Client Manager, PDF preview._
 
 ---
 
-## 📅 Build Log
 
-| Date | What was built |
-|------|---------------|
-| Mar 6 | Project setup · Supabase schema · Auth (Login/Signup) |
-| Mar 7 | Sidebar · Navbar · Dashboard · Layout |
-| Mar 10 | Client Manager · CRUD · API routes |
-| Mar 11 | Invoice List · Builder · Detail page · API |
-| Mar 12 | Settings page (company info, GST, currency) |
-| Mar 13 | PDF export with jsPDF |
+## 🙋 FAQ
+
+**Can I use this for free?**
+Yes — the app is open source. Host it yourself using the free tiers of Vercel and Supabase.
+
+**Is my data secure?**
+All data is isolated per user via Supabase Row-Level Security. Nobody else can access your invoices.
+
+**Does it support GST?**
+Yes — client profiles support GST numbers and tax is auto-calculated in the invoice builder.
 
 ---
 
-## 🚧 Roadmap
-
-- [x] Authentication
-- [x] Dashboard with charts
-- [x] Client Manager
-- [x] Invoice Builder
-- [x] PDF Export
-- [x] Settings
-- [x] Responsive Design
-- [x] Docker
-- [ ] CI/CD (GitHub Actions)
-- [ ] Deploy to Vercel
+> *Invoice Platform — making billing less painful for independent builders.*
