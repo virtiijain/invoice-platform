@@ -60,9 +60,40 @@
 
 ---
 
+
 ## 📸 Screenshots
 
-> _Add screenshots here once deployed. Suggested: Dashboard, Invoice Builder, Client Manager, PDF preview._
+<div align="center">
+
+### 🔐 Auth
+| Login | Signup |
+|-------|--------|
+| ![Login](assets/screenshots/login.png) | ![Signup](assets/screenshots/Signup.png) |
+
+### 📊 Dashboard
+![Dashboard](assets/screenshots/Dashboard.png)
+
+### 🧾 Invoices
+| Invoice List | Add Invoice | Invoice Created |
+|-------------|-------------|-----------------|
+| ![Invoices](assets/screenshots/invoice.png) | ![Add Invoice](assets/screenshots/add%20invoice.png) | ![Created](assets/screenshots/new%20invoice%20created.png) |
+
+### 👥 Clients
+| Client List | Add Client |
+|------------|------------|
+| ![Clients](assets/screenshots/client.png) | ![Add Client](assets/screenshots/new%20client%20added.png) |
+
+### 📄 PDF Export
+| Download | Downloaded |
+|----------|------------|
+| ![Download](assets/screenshots/download%20pdf.png) | ![Downloaded](assets/screenshots/downloaded%20pdf.png) |
+
+### ⚙️ Settings & Notifications
+| Settings | Notifications | Profile |
+|---------|---------------|---------|
+| ![Settings](assets/screenshots/Settings.png) | ![Notifications](assets/screenshots/realtime%20notification.png) | ![Profile](assets/screenshots/Profile%20setting.png) |
+
+</div>
 
 ---
 
