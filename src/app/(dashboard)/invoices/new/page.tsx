@@ -80,7 +80,7 @@ export default function NewInvoicePage() {
       router.push('/invoices')
     } else {
       const data = await res.json()
-      setError(data.error ?? 'Kuch gadbad ho gayi')
+      setError(data.error ?? 'something went wrong')
     }
     setSaving(false)
   }
