@@ -21,7 +21,8 @@
 [![Supabase](https://img.shields.io/badge/Supabase-Auth%20%2B%20DB-3ECF8E?style=flat-square&logo=supabase)](https://supabase.com)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=flat-square&logo=typescript)](https://typescriptlang.org)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-06B6D4?style=flat-square&logo=tailwindcss)](https://tailwindcss.com)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](LICENSE)
+[![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-components-black?style=flat-square&logo=shadcnui)](https://ui.shadcn.com)
+[![Zustand](https://img.shields.io/badge/Zustand-state%20mgmt-brown?style=flat-square)](https://zustand-demo.pmnd.rs)
 
 <br/>
 
