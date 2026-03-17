@@ -79,9 +79,9 @@
 | ![Invoices](assets/screenshots/invoice.png) | ![Add Invoice](assets/screenshots/add%20invoice.png) | ![Created](assets/screenshots/new%20invoice%20created.png) |
 
 ### 👥 Clients
-| Client  | Add Client | 
-|------------|------------|
-| ![Clients](assets/screenshots/client.png) | ![Add Client](assets/screenshots/new%20client%20added.png) ![Created Invoice](assests/screenshots/new%20invoice%20created.png) |
+| Client | Add Client | Client Created |
+|--------|------------|----------------|
+| ![Clients](assets/screenshots/client.png) | ![Add Client](assets/screenshots/new%20client%20added.png) | ![Created Invoice](assets/screenshots/added%20client.png) |
 
 ### 📄 PDF Export
 | Download | Downloaded |
