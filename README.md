@@ -1,4 +1,4 @@
-<div align="center">
+<div align="left">
 
 <br/>
 
@@ -74,14 +74,14 @@
 ![Dashboard](assets/screenshots/Dashboard.png)
 
 ### 🧾 Invoices
-| Invoice List | Add Invoice | Invoice Created |
+| Invoice | Add Invoice | Invoice Created |
 |-------------|-------------|-----------------|
 | ![Invoices](assets/screenshots/invoice.png) | ![Add Invoice](assets/screenshots/add%20invoice.png) | ![Created](assets/screenshots/new%20invoice%20created.png) |
 
 ### 👥 Clients
-| Client List | Add Client |
+| Client  | Add Client | 
 |------------|------------|
-| ![Clients](assets/screenshots/client.png) | ![Add Client](assets/screenshots/new%20client%20added.png) |
+| ![Clients](assets/screenshots/client.png) | ![Add Client](assets/screenshots/new%20client%20added.png) ![Created Invoice](assests/screenshots/new%20invoice%20created.png) |
 
 ### 📄 PDF Export
 | Download | Downloaded |
