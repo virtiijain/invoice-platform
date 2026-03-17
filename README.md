@@ -86,7 +86,7 @@
 ### 📄 PDF Export
 | Download | Downloaded |
 |----------|------------|
-| ![Download](assets/screenshots/download%20pdf.png) | ![Downloaded](assets/screenshots/downloaded%20pdf.png) |
+| ![Download](assets/screenshots/download%20pdf .png) | ![Downloaded](assets/screenshots/downloaded%20pdf.png) |
 
 ### ⚙️ Settings & Notifications
 | Settings | Notifications | Profile |
